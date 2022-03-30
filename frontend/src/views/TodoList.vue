@@ -1,21 +1,43 @@
 <template>
-  <div v-for="todo in todoList" :key="todo.id" class="container">
-    <div class="card mb-3">
-      <div class="card-body">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            @click="updateCurrentState(todo.id)"
-            type="checkbox"
-            value
-            id="flexCheckDefault"
-          />
-          <p v-if="todo.state == true" class="mb-0">
-            <strike>{{ todo.title }}</strike>
-          </p>
-          <p v-else class="mb-0">{{ todo.title }}</p>
-        </div>
+  <div v-for="todo in todoList" :key="todo.id" class="container row mb-3">
+    <div class="container col-2 col-lg-2" style="margin: auto">
+      <div class="form-check" style="margin-left: 80%">
+        <input
+          v-if="todo.state == false"
+          class="form-check-input"
+          @click="updateCurrentState(todo.id)"
+          type="checkbox"
+          value
+          id="flexCheckDefault"
+        />
+        <input
+          v-else
+          class="form-check-input"
+          @click="updateCurrentState(todo.id)"
+          type="checkbox"
+          value
+          id="flexCheckDefault"
+          checked
+        />
       </div>
+    </div>
+    <div class="container col-10 col-lg-10">
+      <router-link
+        class="router-link"
+        :to="{
+          name: 'TodoDetail',
+          params: { id: todo.id },
+        }"
+      >
+        <div class="card">
+          <div class="card-body">
+            <p v-if="todo.state == true" class="mb-0">
+              <s>{{ todo.title }}</s>
+            </p>
+            <p v-else class="mb-0">{{ todo.title }}</p>
+          </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -53,7 +75,7 @@ export default {
         })
         this.currentState = true;
       }
-      this.getTodoList();
+      await this.getTodoList();
     },
   },
 
@@ -63,3 +85,11 @@ export default {
 
 }
 </script>
+
+<style>
+.router-link,
+.router-link:hover {
+  text-decoration: none;
+  color: black;
+}
+</style>

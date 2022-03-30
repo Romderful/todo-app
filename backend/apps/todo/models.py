@@ -9,6 +9,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     state = models.BooleanField()
+    update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         """Display the title and the state of the todo in the admin panel."""

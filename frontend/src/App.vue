@@ -12,7 +12,7 @@
 }
 
 body {
-  padding: 10rem;
+  padding: 5%;
 }
 
 nav {
