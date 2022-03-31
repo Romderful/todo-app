@@ -6,7 +6,7 @@ from .models import Todo
 
 
 class TodoSerializer(serializers.ModelSerializer):
-    """Animes serializer."""
+    """Todo's serializer."""
 
     class Meta:
         """Meta class."""

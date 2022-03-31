@@ -1,6 +1,28 @@
 <template>
+  <form @submit.prevent="createTodo">
+    <div class="container mb-5 row" style="max-width: 50rem; margin: auto;">
+      <div class="container col-12 col-lg-4 mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Todo's title" v-model="todoTitle" />
+        </div>
+      </div>
+      <div class="container col-12 col-lg-5 mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Todo's description"
+            v-model="todoDescription"
+          />
+        </div>
+      </div>
+      <div class="container col-12 col-lg-3">
+        <button type="submit" class="btn btn-primary">Add a new todo!</button>
+      </div>
+    </div>
+  </form>
   <div v-for="todo in todoList" :key="todo.id" class="container row mb-3">
-    <div class="container col-2 col-lg-2" style="margin: auto">
+    <div class="container col-2 col-lg-1" style="margin: auto">
       <div class="form-check" style="margin-left: 80%">
         <input
           v-if="todo.state == false"
@@ -21,7 +43,7 @@
         />
       </div>
     </div>
-    <div class="container col-10 col-lg-10">
+    <div class="container col-10 col-lg-11">
       <router-link
         class="router-link"
         :to="{
@@ -52,6 +74,8 @@ export default {
       todoUrl: "http://127.0.0.1:8000/api-v1/todos/",
       todoList: [],
       currentState: null,
+      todoTitle: "",
+      todoDescription: "",
     }
   },
 
@@ -76,6 +100,17 @@ export default {
         this.currentState = true;
       }
       await this.getTodoList();
+    },
+
+    async createTodo() {
+      await axios.post(this.todoUrl, {
+        title: this.todoTitle,
+        description: this.todoDescription,
+        state: false,
+      }),
+        this.todoTitle = "";
+      this.todoDescription = "";
+      this.getTodoList();
     },
   },
 
