@@ -43,7 +43,7 @@
         />
       </div>
     </div>
-    <div class="container col-10 col-lg-11">
+    <div class="container col-8 col-lg-10">
       <router-link
         class="router-link"
         :to="{
@@ -60,6 +60,15 @@
           </div>
         </div>
       </router-link>
+    </div>
+    <div class="container col-2 col-lg-1" style="margin: auto;">
+      <button
+        type="submit"
+        class="btn-close"
+        @click="deleteTodo(todo.id)"
+        aria-label="Close"
+        style="margin-right: 80%;"
+      ></button>
     </div>
   </div>
 </template>
@@ -110,6 +119,11 @@ export default {
       }),
         this.todoTitle = "";
       this.todoDescription = "";
+      this.getTodoList();
+    },
+
+    async deleteTodo(todo_id) {
+      await axios.delete(`${this.todoUrl}${todo_id}/`);
       this.getTodoList();
     },
   },
